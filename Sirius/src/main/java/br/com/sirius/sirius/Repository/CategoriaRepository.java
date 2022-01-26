@@ -10,8 +10,7 @@ import br.com.sirius.sirius.Model.Categoria;
 @Repository //Cria um repositorio 
 public interface CategoriaRepository extends JpaRepository<Categoria, Long>{ // Pega a herança da interface JpaRepository
 		
-	public static List<Categoria> findAllByDescricaoContainingIgnoreCase(String descricao){ // Procura por descricao 
+	public static List<Categoria> findAllByNomeContainingIgnoreCase(String nome){ // Procura por nome
 		return null;
 	}
 }
-
