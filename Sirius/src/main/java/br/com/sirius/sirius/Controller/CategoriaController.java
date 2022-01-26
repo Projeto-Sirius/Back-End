@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.sirius.sirius.Model.Categoria;
 import br.com.sirius.sirius.Repository.CategoriaRepository;
 
-@RequestMapping("/categoria")//Gera o EndPoint 
-@RestController//Cria um Controller
+@RequestMapping("/categoria") //Gera o EndPoint 
+@RestController //Cria um Controller
 @CrossOrigin(origins = "*", allowedHeaders = "*") // Permite que o Front-End se comunique com o Back-End
 public class CategoriaController {
 	
@@ -29,32 +29,31 @@ public class CategoriaController {
 	CategoriaRepository repository;
 	
 	@GetMapping // Responde com todos os dados de Categoria
-	ResponseEntity <List<Categoria>> getAll(){ 
+	ResponseEntity<List<Categoria>> getAll(){ 
 		return ResponseEntity.ok(repository.findAll()); //Abstrai todos os dados de Categoria
 	}
 	
 	@GetMapping("/{id}")// Responde com todos os dados que contem o id
-	ResponseEntity <Categoria> getById(@PathVariable Long id){ //Procura o id atravez da url
+	ResponseEntity<Categoria> getById(@PathVariable Long id){ //Procura o id atravez da url
 		return repository.findById(id)
 				.map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.notFound().build()); // Devolve todos os dados com o id
 	}
 	
-	@GetMapping("/descricao/{descricao}") // Procura pela descrição no Banco de dados
-	ResponseEntity <List<Categoria>> getByDescricao(@PathVariable String descricao){ //abstrai a descricao apartir da url
-		return ResponseEntity.ok(CategoriaRepository.findAllByDescricaoContainingIgnoreCase(descricao)); //Procura no BD atravez da descricao
+	@GetMapping("/nome/{nome}") // Procura pelo nome no Banco de dados
+	ResponseEntity<List<Categoria>> getByNome(@PathVariable String nome){ //abstrai o nome apartir da url
+		return ResponseEntity.ok(CategoriaRepository.findAllByNomeContainingIgnoreCase(nome)); //Procura no BD atravez do nome
 	}
 	
-	
 	@PostMapping // Envia as informações para o Banco de dados
-	ResponseEntity <Categoria> post (@RequestBody @Validated Categoria categoria){
+	ResponseEntity<Categoria> post(@RequestBody @Validated Categoria categoria){
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
 		
 		
 	}
 	
 	@PutMapping // Alterar dados na tabela categoria
-	ResponseEntity <Categoria> put (@RequestBody @Validated Categoria categoria){// Faz a alteração a apartir do corpo da requisição
+	ResponseEntity<Categoria> put(@RequestBody @Validated Categoria categoria){// Faz a alteração a apartir do corpo da requisição
 		return repository.findById(categoria.getId()) //Procurar pelo Id
 				.map(resp -> ResponseEntity.ok().body(repository.save(categoria))) //Caso exista ele modifica os dados
 				.orElse(ResponseEntity.notFound().build());
