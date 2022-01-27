@@ -8,10 +8,10 @@
 		<version>2.6.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>org.generation</groupId>
-	<artifactId>Sirius</artifactId>
+	<groupId>com.sirius</groupId>
+	<artifactId>sirius</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Sirius</name>
+	<name>sirius</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
