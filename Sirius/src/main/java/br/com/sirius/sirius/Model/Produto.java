@@ -1,42 +1,61 @@
 package br.com.sirius.sirius.Model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@RequestMapping("/produto")
-@Entity // Instanciando Tabela
-@Table(name = "tb_produtos") // Nome da tabela
+@Entity 
+@Table(name = "tb_produtos")
 public class Produto {
 
-	@Id // Definindo chave primária
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment
-	private long id; // Definindo Id
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-	@NotNull // Definindo que não pode ficar nulo.
-	@Size(min = 3, max = 255, message = "O atributo nome deve haver no mÃ­nimo trÃªs caracteres e no mÃ¡ximo 255")
-	private String nome; // Nome do produto.
+	@NotNull(message = "Não permite nulo")
+	@Size(min = 3, max = 255, message = "O atributo nome deve haver no mÃ­nimo trÃªs caracteres e no máximo 255")
+	private String nome;
 
-	private double preco; // Definindo preço.
+	private BigDecimal preco;
 
-	private int quantidade; // Definindo quantidade.
+	private int quantidade;
 
-	boolean disponivel; // Definindo disponivel.
+	boolean disponivel;
 
-	@ManyToOne // Referência Categoria
-	@JsonIgnoreProperties("tb_produtos") // Evita Looping no postman
-	public Categoria categoria; // referência tb_categoria
+	@ManyToOne
+	@JsonIgnoreProperties("produto")
+	public Categoria categoria;
+	
+	@OneToOne
+	@JsonIgnoreProperties("produto")
+	public Usuario usuario;
 
-	// Getters e Setters
+	
+	public BigDecimal getPreco() {
+		return preco;
+	}
+
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	public long getId() {
 		return id;
@@ -60,14 +79,6 @@ public class Produto {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(double preco) {
-		this.preco = preco;
 	}
 
 	public int getQuantidade() {

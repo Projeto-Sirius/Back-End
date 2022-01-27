@@ -3,7 +3,6 @@ package br.com.sirius.sirius.Model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-//Bibliotecas
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,30 +14,29 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity // Cria tabela
-@Table(name = "tb_categoria") // Da nome para a tabela
+@Entity 
+@Table(name = "tb_categoria") 
 public class Categoria {
 
-	@Id // Criando a primary key de tb_categoria
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // Fazendo auto-increment
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private long id;
 
-	@NotNull // Não permite valores nulos
+	@NotNull
 	@Size(min = 3, max = 255, message = "O atributo nome deve haver no mínimo três caracteres e no máximo 255")
 	private String nome; // Definindo o nome da categoria
 
-	@NotNull // Não permite valores nulos
+	@NotNull 
 	@Size(min = 20, max = 255, message = "O atributo descricao deve ter no mínimo 20 caracteres e no máximo 255")
-	private String descricao; // Definindo nome da descrição
+	private String descricao; 
 
-	@NotNull // Não permite valores nulos
+	@NotNull 
 	@Size(min = 3, max = 255, message = "O atributo zona_preferencial deve haver no mínimo três caracteres e no máximo 255")
-	private String zona_preferencial; // Definindo zona preferencial da categoria por estado.
+	private String zona_preferencial; 
 
-	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL) // Mapeia categoria em Produto e apaga todos os
-																	// produtos da categoria quando está for apagada.
-	@JsonIgnoreProperties("categoria") // Ignora categoria para evitar um looping.
-	private List<Produto> produto; // Faz referência a uma lista de produto.
+	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)												
+	@JsonIgnoreProperties("categoria") 
+	private List<Produto> produto; 
 
 	// Criando Getters e Setters
 	public long getId() {

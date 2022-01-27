@@ -21,51 +21,49 @@ import br.com.sirius.sirius.Repository.CategoriaRepository;
 
 @RequestMapping("/categoria") // Gera o EndPoint
 @RestController // Cria um Controller
-@CrossOrigin(origins = "*", allowedHeaders = "*") // Permite que o Front-End se comunique com o Back-End
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CategoriaController {
 
-	@Autowired // Faz a injeção das dependências na Interface
+	@Autowired 
 	CategoriaRepository repository;
 
-	@GetMapping // Responde com todos os dados de Categoria
+	@GetMapping
 	ResponseEntity<List<Categoria>> getAll() {
-		return ResponseEntity.ok(repository.findAll()); // Abstrai todos os dados de Categoria
+		
+		return ResponseEntity.ok(repository.findAll()); 
 	}
 
-	@GetMapping("/{id}") // Responde com todos os dados que contem o id
-	ResponseEntity<Categoria> getById(@PathVariable Long id) { // Procura o id atravez da url
-		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build()); // Devolve
-																														// todos
-																														// os
-																														// dados
-																														// com
-																														// o
-																														// id
+	@GetMapping("/{id}")
+	ResponseEntity<Categoria> getById(@PathVariable Long id) { 
+		
+		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 	}
 
-	@GetMapping("/nome/{nome}") // Procura pelo nome no Banco de dados
-	ResponseEntity<List<Categoria>> getByNome(@PathVariable String nome) { // abstrai o nome apartir da url
-		return ResponseEntity.ok(CategoriaRepository.findAllByNomeContainingIgnoreCase(nome)); // Procura no BD atravez
-																								// do nome
+	@GetMapping("/nome/{nome}") 
+	ResponseEntity<List<Categoria>> getByNome(@PathVariable String nome) { 
+		
+		return ResponseEntity.ok(CategoriaRepository.findAllByNomeContainingIgnoreCase(nome)); 
 	}
 
-	@PostMapping // Envia as informações para o Banco de dados
+	@PostMapping 
 	ResponseEntity<Categoria> post(@RequestBody @Validated Categoria categoria) {
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
 
 	}
 
-	@PutMapping // Alterar dados na tabela categoria
-	ResponseEntity<Categoria> put(@RequestBody @Validated Categoria categoria) {// Faz a alteração a apartir do corpo da
-																				// requisição
-		return repository.findById(categoria.getId()) // Procurar pelo Id
-				.map(resp -> ResponseEntity.ok().body(repository.save(categoria))) // Caso exista ele modifica os dados
+	@PutMapping 
+	ResponseEntity<Categoria> put(@RequestBody @Validated Categoria categoria) {
+		
+		return repository.findById(categoria.getId())
+				.map(resp -> ResponseEntity.ok().body(repository.save(categoria)))
 				.orElse(ResponseEntity.notFound().build());
 	}
 
-	@DeleteMapping("/{id}") // Deletar dados do BD atravez do ID
+	@DeleteMapping("/{id}") 
 	ResponseEntity<?> deleteCategoria(@PathVariable Long id) {
-		return repository.findById(id) // Procura pelo Id
+		
+		return repository.findById(id)
 				.map(resp -> {
 					repository.deleteById(id);
 					return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
