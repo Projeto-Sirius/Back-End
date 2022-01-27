@@ -22,42 +22,42 @@ import br.com.sirius.sirius.Repository.ProdutoRepository;
 @CrossOrigin(origins = "*", allowedHeaders = "*") // Permite conexão com o front-end
 public class ProdutoController {
 	
-	@Autowired
-	private ProdutoRepository repository;
+	@Autowired //Injeta as dependencias em repositorio
+	private ProdutoRepository repository; //instancia repositório
 
-	@GetMapping
+	@GetMapping  // Pesquisa todos os dados
 	public ResponseEntity<List<Produto>> GetAll() {
 		return ResponseEntity.ok(repository.findAll());
 
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/{id}") // Pesquisa por ID
 	public ResponseEntity<Produto> GetByID(@PathVariable long id) {
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 	}
 
-	@GetMapping("/nome/{nome}")
+	@GetMapping("/nome/{nome}")//Pesquisa por nome
 	public ResponseEntity<List<Produto>> GetByNome(@PathVariable String nome) {
 		return ResponseEntity.ok(repository.findAllByNomeContainingIgnoreCase(nome));
 	}
 
-	@PostMapping
+	@PostMapping //Insere informações no BD
 	public ResponseEntity<Produto> post(@RequestBody Produto produto) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(produto));
 	}
 
-	@PutMapping
+	@PutMapping //Altera as informações
 	public ResponseEntity<Produto> put( @RequestBody Produto produto) {
-		return repository.findById(produto.getId()).map(resposta -> ResponseEntity.ok().body(repository.save(produto)))
+		return repository.findById(produto.getId()).map(resposta -> ResponseEntity.ok().body(repository.save(produto))) //Altera a informação
 				.orElse(ResponseEntity.notFound().build());
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/{id}") //Deleta as informações 
 	public ResponseEntity<?> deletePostagem(@PathVariable long id) {
 		return repository.findById(id).map(resposta -> {
-			repository.deleteById(id);
+			repository.deleteById(id); //Deleta a informação no BD
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		}).orElse(ResponseEntity.notFound().build());
+		}).orElse(ResponseEntity.notFound().build()); // Se não conter as informações no BD, retorna 404
 	}
 
 }
