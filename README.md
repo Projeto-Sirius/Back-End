@@ -21,6 +21,9 @@ Sirius também é acelerador de partículas do tipo síncrotron localizado no mu
 ##
 
 ## 💡 Etapas do Projeto:
+ 
+ <h1 align="center"> 🚀 Back-End 🚀 </h1>
+ 
 
 -  Definição da problemática central do Projeto
 -  Escolha de plataforma Rede Social ou E-commerce 
