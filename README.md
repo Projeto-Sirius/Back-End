@@ -1,7 +1,7 @@
 ##
 <h1 align="center"> Projeto Sirius ✨</h1>
 <h3 align="center">
-<img align="center"  height="350"  alt="gif-ju" src="https://media.giphy.com/media/hLYRBxb1h2jOHhZvtK/giphy.gif">
+<img align="center"  height="350"  alt="gif-ju" src="https://i.imgur.com/pLEpIbs.png">
 
 ##
 
