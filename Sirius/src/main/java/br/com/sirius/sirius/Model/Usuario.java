@@ -10,11 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -23,11 +26,14 @@ public class Usuario{
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
+	
+	@Schema(example = "email@email.com.br")
+	@Email(message = "Deve ter email válido")
 	@NotNull(message = "Não permite nulo")
 	@Size(min = 10, max = 255, message = "O email deve ter no mínimo 10 e máximo 255") 
 	private String usuario;
-
+	
+	
 	@NotNull(message = "Não permite nulo")
 	@Size(min = 8, max = 255, message = "O atributo deve ter  no mínimo 20 e no máximo 255 caracteres")
 	private String senha;
@@ -35,6 +41,8 @@ public class Usuario{
 	@NotNull(message = "Não permite nulo")
 	@Size(min = 10, max = 255, message = "O atributo deve ter  no mínimo 20 e no máximo 255 caracteres ")
 	private String nomeCompleto;
+	
+	private String foto;
 	
 	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
@@ -83,6 +91,14 @@ public class Usuario{
 
 	public void setNomeCompleto(String nomeCompleto) {
 		this.nomeCompleto = nomeCompleto;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 
 

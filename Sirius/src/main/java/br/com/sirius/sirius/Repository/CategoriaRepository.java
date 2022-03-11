@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import br.com.sirius.sirius.Model.Categoria;
 
-@Repository
-public interface CategoriaRepository extends JpaRepository<Categoria, Long>{
+@Repository 
+public interface CategoriaRepository extends JpaRepository<Categoria, Long>{ 
 		
-	public static List<Categoria> findAllByDescricaoContainingIgnoreCase(String descricao){
+	public static List<Categoria> findAllByNomeContainingIgnoreCase(String nome){
 		return null;
 	}
 }

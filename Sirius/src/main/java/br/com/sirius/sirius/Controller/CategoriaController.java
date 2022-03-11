@@ -19,55 +19,58 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.sirius.sirius.Model.Categoria;
 import br.com.sirius.sirius.Repository.CategoriaRepository;
 
-@RequestMapping("/categoria")
-@RestController
+@RequestMapping("/categoria") // Gera o EndPoint
+@RestController // Cria um Controller
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CategoriaController {
-	
-	
-	@Autowired
+
+	@Autowired 
 	CategoriaRepository repository;
-	
+
 	@GetMapping
-	ResponseEntity <List<Categoria>> getAll(){
-		return ResponseEntity.ok(repository.findAll());
+	ResponseEntity<List<Categoria>> getAll() {
+		
+		return ResponseEntity.ok(repository.findAll()); 
 	}
-	
+
 	@GetMapping("/{id}")
-	ResponseEntity <Categoria> getById(@PathVariable Long id){
-		return repository.findById(id)
-				.map(resp -> ResponseEntity.ok(resp))
-				.orElse(ResponseEntity.notFound().build());
+	ResponseEntity<Categoria> getById(@PathVariable Long id) { 
+		
+		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
+	}
+
+	@GetMapping("/nome/{nome}") 
+	ResponseEntity<List<Categoria>> getByNome(@PathVariable String nome) { 
+		
+		return ResponseEntity.ok(CategoriaRepository.findAllByNomeContainingIgnoreCase(nome)); 
 	}
 	
-	@GetMapping("/descricao/{descricao}")
-	ResponseEntity <List<Categoria>> getByDescricao(@PathVariable String descricao){
-		return ResponseEntity.ok(CategoriaRepository.findAllByDescricaoContainingIgnoreCase(descricao));
-	}
 	
-	@PostMapping
-	ResponseEntity <Categoria> post (@RequestBody @Validated Categoria categoria){
+
+	@PostMapping 
+	ResponseEntity<Categoria> post(@RequestBody @Validated Categoria categoria) {
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
-		
-		
+
 	}
-	
-	@PutMapping
-	ResponseEntity <Categoria> put (@RequestBody @Validated Categoria categoria){
+
+	@PutMapping 
+	ResponseEntity<Categoria> put(@RequestBody @Validated Categoria categoria) {
+		
 		return repository.findById(categoria.getId())
 				.map(resp -> ResponseEntity.ok().body(repository.save(categoria)))
 				.orElse(ResponseEntity.notFound().build());
 	}
-	
-	@DeleteMapping("/{id}")
-	ResponseEntity<?> deleteCategoria (@PathVariable Long id){
+
+	@DeleteMapping("/{id}") 
+	ResponseEntity<?> deleteCategoria(@PathVariable Long id) {
+		
 		return repository.findById(id)
-				.map(resp ->{
+				.map(resp -> {
 					repository.deleteById(id);
 					return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-				})
-				.orElse(ResponseEntity.notFound().build());
-							
+				}).orElse(ResponseEntity.notFound().build());
+
 	}
-		
+
 }
