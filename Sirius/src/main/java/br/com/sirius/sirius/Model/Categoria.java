@@ -30,7 +30,7 @@ public class Categoria {
 	@Size(min = 20, max = 255, message = "O atributo descricao deve ter no mínimo 20 caracteres e no máximo 255")
 	private String descricao; 
 
-	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)												
+	@OneToMany(mappedBy = "categoria", cascade = CascadeType.REMOVE)												
 	@JsonIgnoreProperties("categoria") 
 	private List<Produto> produto; 
 
